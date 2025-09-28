@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.12)
 project(null-safety LANGUAGES CXX)
 
 option(NULLSAFETY_BUILD_TESTS "Build tests" ON)
