@@ -18,7 +18,7 @@ public:
     /// 要素型
     using element_type = T;
     /// 非NULLポインタ型
-    using nonnull_type = nonnull_ptr<T>;
+    using nullable_type = nullable_ptr<T>;
     /// weakポインタ型
     using weak_type = std::weak_ptr<T>;
 
