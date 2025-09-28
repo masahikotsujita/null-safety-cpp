@@ -4,8 +4,8 @@ project(null-safety LANGUAGES CXX)
 option(NULLSAFETY_BUILD_EXAMPLES "Build examples" OFF)
 
 add_library(null-safety STATIC
-    include/null-safety/nullable_ptr.h
-    include/null-safety/nonull_ptr.h
+    include/null-safety/pointer/nullable_ptr.h
+    include/null-safety/pointer/nonull_ptr.h
     include/null-safety/null-safety.h
     src/null-safety.cpp
 )
