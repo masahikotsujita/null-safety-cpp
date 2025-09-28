@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 4.0)
 project(null-safety LANGUAGES CXX)
 
+option(NULLSAFETY_BUILD_TESTS "Build tests" ON)
 option(NULLSAFETY_BUILD_EXAMPLES "Build examples" OFF)
 
 add_library(null-safety STATIC
@@ -14,6 +15,11 @@ target_include_directories(null-safety PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 target_compile_features(null-safety PUBLIC cxx_std_17)
+
+if(NULLSAFETY_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
 
 if(NULLSAFETY_BUILD_EXAMPLES)
     add_subdirectory(examples)
