@@ -108,12 +108,12 @@ public:
     }
 
     /// 生ポインタを取得します
-    T *get() const noexcept {
+    [[nodiscard]] T *get() const noexcept {
         return m_sp.get();
     }
 
     /// メンバーアクセス演算子
-    T *operator->() const noexcept {
+    [[nodiscard]] T *operator->() const noexcept {
         return m_sp.get();
     }
 
