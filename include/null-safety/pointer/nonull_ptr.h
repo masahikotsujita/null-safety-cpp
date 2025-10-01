@@ -6,8 +6,6 @@
 #define NULL_SAFETY_CPP_NONULL_PTR_H
 #include <memory>
 
-#include "nullable_ptr.h"
-
 namespace nsf {
 template<typename T>
 class nullable_ptr;
