@@ -67,6 +67,16 @@ public:
 
     /**
      * コピー代入演算子
+     * @param r コピー元ポインタ
+     * @return このポインタ
+     */
+    nonnull_ptr &operator=(const nonnull_ptr &r) noexcept {
+        m_sp = r.shared();
+        return *this;
+    }
+
+    /**
+     * コピー代入演算子
      * @tparam Y コピー元ポインタの要素型
      * @param r コピー元ポインタ
      * @return このポインタ
@@ -74,6 +84,16 @@ public:
     template<typename Y>
     nonnull_ptr &operator=(const nonnull_ptr<Y> &r) noexcept {
         m_sp = r.shared();
+        return *this;
+    }
+
+    /**
+     * ムーブ代入演算子
+     * @param r ムーブ元ポインタ
+     * @return このポインタ
+     */
+    nonnull_ptr &operator=(nonnull_ptr &&r) noexcept {
+        m_sp = std::move(r.shared());
         return *this;
     }
 
