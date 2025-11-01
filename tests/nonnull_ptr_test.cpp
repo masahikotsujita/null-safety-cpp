@@ -83,7 +83,7 @@ SCENARIO("nonnull_ptr constructed correctly") {
     }
 }
 
-SCENARIO("nonnull pointer can access its resource") {
+SCENARIO("nonnull pointer can access its resource", "[nonnull_ptr]") {
     GIVEN("a nonnull pointer") {
         nsf::nonnull_ptr<FOO> foo = nsf::make_nonnull<FOO>(1, 2);
         THEN("can read its data by -> operator") {
