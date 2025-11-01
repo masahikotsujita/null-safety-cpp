@@ -36,6 +36,53 @@ SCENARIO("nonnull_ptr cannot be created from potentially nullable pointers", "[n
     }
 }
 
+SCENARIO("nonnull_ptr constructed correctly") {
+    GIVEN("a nonnull pointer copy-constructed from an another nonnull pointer") {
+        nsf::nonnull_ptr<int> a = nsf::make_nonnull<int>(1);
+        nsf::nonnull_ptr<int> b = a;
+        THEN("it should be correctly copied") {
+            REQUIRE(*a == 1);
+            REQUIRE(*b == 1);
+        }
+        WHEN("the source pointer is replaced by another pointer") {
+            a = nsf::make_nonnull<int>(2);
+            THEN("it does not affect the destination pointer") {
+                REQUIRE(*b == 1);
+            }
+        }
+    }
+    GIVEN("a nonnull pointer copy-assigned from an another nonnull pointer") {
+        nsf::nonnull_ptr<int> a = nsf::make_nonnull<int>(1);
+        nsf::nonnull_ptr<int> b = nsf::make_nonnull<int>(0);
+        b = a;
+        THEN("it should be correctly copied") {
+            REQUIRE(*a == 1);
+            REQUIRE(*b == 1);
+        }
+        WHEN("the source pointer is replaced by another pointer") {
+            a = nsf::make_nonnull<int>(2);
+            THEN("it does not affect the destination pointer") {
+                REQUIRE(*b == 1);
+            }
+        }
+    }
+    GIVEN("a nonnull pointer move-constructed from an another nonnull pointer") {
+        nsf::nonnull_ptr<int> a = nsf::make_nonnull<int>(1);
+        nsf::nonnull_ptr<int> b = std::move(a);
+        THEN("it should be correctly moved") {
+            REQUIRE(*b == 1);
+        }
+    }
+    GIVEN("a nonnull pointer move-assigned from an another nonnull pointer") {
+        nsf::nonnull_ptr<int> a = nsf::make_nonnull<int>(1);
+        nsf::nonnull_ptr<int> b = nsf::make_nonnull<int>(0);
+        b = std::move(a);
+        THEN("it should be correctly moved") {
+            REQUIRE(*b == 1);
+        }
+    }
+}
+
 SCENARIO("nonnull pointer can access its resource") {
     GIVEN("a nonnull pointer") {
         nsf::nonnull_ptr<FOO> foo = nsf::make_nonnull<FOO>(1, 2);
