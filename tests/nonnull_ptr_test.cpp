@@ -81,3 +81,38 @@ SCENARIO("nonnull pointer can access its resource") {
         }
     }
 }
+
+SCENARIO("copying nonnull_ptr increase its use_count", "[nonnull_ptr]") {
+    GIVEN("a nonnull_ptr") {
+        std::optional optFoo = nsf::make_nonnull<FOO>(1, 2);
+        nsf::nonnull_ptr<FOO>& foo = optFoo.value();
+        THEN("use count is 1") {
+            REQUIRE(foo.use_count() == 1);
+        }
+        WHEN("it's copied to another nonnull ptr") {
+            nsf::nonnull_ptr<FOO> foo2 = foo;
+            THEN("use count is 2") {
+                REQUIRE(foo.use_count() == 2);
+                REQUIRE(foo2.use_count() == 2);
+            }
+            WHEN("the source pointer is destructed") {
+                optFoo.reset();
+                THEN("use count is 1") {
+                    REQUIRE(foo.use_count() == 1);
+                }
+            }
+            WHEN("the source pointer replaced by another pointer") {
+                optFoo.value() = nsf::make_nonnull<FOO>(3, 4);
+                THEN("use count is 1") {
+                    REQUIRE(foo.use_count() == 1);
+                }
+            }
+        }
+        WHEN("it's moved to another nonnull ptr") {
+            nsf::nonnull_ptr<FOO> foo2 = std::move(foo);
+            THEN("use count is 1") {
+                REQUIRE(foo2.use_count() == 1);
+            }
+        }
+    }
+}
