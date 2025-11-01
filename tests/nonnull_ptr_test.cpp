@@ -36,6 +36,15 @@ SCENARIO("nonnull_ptr cannot be created from potentially nullable pointers", "[n
     }
 }
 
+SCENARIO("nonnull_ptr is not equatable with null", "[nonnull_ptr]") {
+    THEN("equality comparable with nullptr") {
+        REQUIRE(!nsf_test::is_equality_comparable_with_v<nsf::nonnull_ptr<FOO>, std::nullptr_t>);
+    }
+    THEN("equality comparable with nullptr") {
+        REQUIRE(!nsf_test::is_equality_comparable_with_v<nsf::nonnull_ptr<FOO>, std::nullopt_t>);
+    }
+}
+
 SCENARIO("nonnull_ptr constructed correctly") {
     GIVEN("a nonnull pointer copy-constructed from an another nonnull pointer") {
         nsf::nonnull_ptr<int> a = nsf::make_nonnull<int>(1);
