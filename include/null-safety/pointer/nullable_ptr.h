@@ -286,13 +286,13 @@ bool operator !=(const nullable_ptr<T> &a, const nullable_ptr<U> &b) noexcept {
 /// !=比較演算子
 template<typename T>
 bool operator !=(const nullable_ptr<T> &a, std::nullptr_t) noexcept {
-    return a.shared();
+    return a.shared() != nullptr;
 }
 
 /// !=比較演算子
 template<typename T>
 bool operator !=(std::nullptr_t, const nullable_ptr<T> &b) noexcept {
-    return b.shared();
+    return b.shared() != nullptr;
 }
 }
 

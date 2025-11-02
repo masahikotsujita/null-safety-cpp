@@ -9,12 +9,52 @@
 
 using namespace nsf_test;
 
-SCENARIO("nullable pointers are equality comparable", "[nullable_ptr]") {
-    THEN("equality comparable with itself") {
-        REQUIRE(nsf_test::is_equality_comparable_v<nsf::nullable_ptr<FOO>>);
+SCENARIO("nullable_ptr constructors correctly works", "[nullable_ptr]") {
+    GIVEN("a default-constructed nullable pointer") {
+        nsf::nullable_ptr<int> a;
+        THEN("it is null") {
+            REQUIRE(a == nullptr);
+            REQUIRE(nullptr == a);
+            REQUIRE_FALSE(a != nullptr);
+            REQUIRE_FALSE(nullptr != a);
+            REQUIRE_FALSE(bool(a));
+        }
+        THEN("use_count is 0") {
+            REQUIRE(a.use_count() == 0);
+        }
     }
-    THEN("equality comparable with nullptr") {
-        REQUIRE(nsf_test::is_equality_comparable_with_v<nsf::nullable_ptr<FOO>, std::nullptr_t>);
+    GIVEN("a nullable pointer constructed from nullptr") {
+        nsf::nullable_ptr<int> a = nullptr;
+        THEN("it is null") {
+            REQUIRE(a == nullptr);
+            REQUIRE(nullptr == a);
+            REQUIRE_FALSE(a != nullptr);
+            REQUIRE_FALSE(nullptr != a);
+            REQUIRE_FALSE(bool(a));
+        }
+        THEN("use_count is 0") {
+            REQUIRE(a.use_count() == 0);
+        }
+    }
+    GIVEN("two null nullable pointers") {
+        nsf::nullable_ptr<int> a;
+        nsf::nullable_ptr<int> b = nullptr;
+        THEN("they are equal") {
+            REQUIRE(a == b);
+        }
+    }
+    GIVEN("a nullable pointer constructed from nonnull pointer") {
+        nsf::nullable_ptr<int> a = nsf::make_nonnull<int>(1);
+        THEN("it is not null") {
+            REQUIRE_FALSE(a == nullptr);
+            REQUIRE_FALSE(nullptr == a);
+            REQUIRE(a != nullptr);
+            REQUIRE(nullptr != a);
+            REQUIRE(bool(a));
+        }
+        THEN("use_count is 1") {
+            REQUIRE(a.use_count() == 1);
+        }
     }
 }
 
