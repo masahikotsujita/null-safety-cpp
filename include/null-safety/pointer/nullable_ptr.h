@@ -247,6 +247,14 @@ public:
         return nonnull_type{m_sp};
     }
 
+    /**
+     * boolキャスト演算子
+     * @return 非nullならtrue、そうでなければfalse.
+     */
+    explicit operator bool() const noexcept {
+        return m_sp != nullptr;
+    }
+
 private:
     std::shared_ptr<T> m_sp;
 };
