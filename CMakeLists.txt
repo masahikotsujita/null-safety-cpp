@@ -7,8 +7,8 @@ option(NULLSAFETY_BUILD_EXAMPLES "Build examples" OFF)
 add_library(null-safety STATIC
     include/null-safety/pointer/nullable_ptr.h
     include/null-safety/pointer/nonull_ptr.h
-    include/null-safety/null-safety.h
-    src/null-safety.cpp
+    include/null-safety/null_safety.h
+    src/null_safety.cpp
 )
 target_include_directories(null-safety PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
