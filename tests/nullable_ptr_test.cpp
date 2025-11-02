@@ -58,6 +58,65 @@ SCENARIO("nullable_ptr constructors correctly works", "[nullable_ptr]") {
     }
 }
 
+SCENARIO("unwrapping nullable pointer correctly works", "[nullable_ptr]") {
+    GIVEN("a null nullable_ptr") {
+        nsf::nullable_ptr<int> a = nullptr;
+        WHEN("unwrap using if_nonnull") {
+            int then_invoke_count = 0;
+            a.if_nonnull([&](const auto&) {
+                then_invoke_count++;
+            });
+            THEN("then block is not invocated.") {
+                REQUIRE(then_invoke_count == 0);
+            }
+        }
+        WHEN("unwrap using if_nonnull_else") {
+            int then_invoke_count = 0;
+            int else_invoke_count = 0;
+            a.if_nonnull([&](const auto&) {
+                then_invoke_count++;
+            }, [&] {
+                else_invoke_count++;
+            });
+            THEN("else block is invocated only once.") {
+                REQUIRE(then_invoke_count == 0);
+                REQUIRE(else_invoke_count == 1);
+            }
+        }
+    }
+    GIVEN("a non-null nullable_ptr") {
+        nsf::nullable_ptr<int> a = nsf::make_nonnull<int>(1);
+        WHEN("unwrap using nonnull_force") {
+            auto nonnull_a = a.nonnull_force();
+            THEN("unwrap correctly") {
+                REQUIRE(*nonnull_a == 1);
+            }
+        }
+        WHEN("unwrap using if_nonnull") {
+            int then_invoke_count = 0;
+            a.if_nonnull([&](const auto&) {
+                then_invoke_count++;
+            });
+            THEN("then block is not invocated.") {
+                REQUIRE(then_invoke_count == 1);
+            }
+        }
+        WHEN("unwrap using if_nonnull_else") {
+            int then_invoke_count = 0;
+            int else_invoke_count = 0;
+            a.if_nonnull([&](const auto&) {
+                then_invoke_count++;
+            }, [&] {
+                else_invoke_count++;
+            });
+            THEN("else block is invocated only once.") {
+                REQUIRE(then_invoke_count == 1);
+                REQUIRE(else_invoke_count == 0);
+            }
+        }
+    }
+}
+
 SCENARIO("a nullable pointer cannot access its resource without null-check", "[nullable_ptr]") {
     THEN("cannot call * operator") {
         REQUIRE(!nsf_test::has_dereference_v<nsf::nullable_ptr<FOO>>);
