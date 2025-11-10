@@ -1,5 +1,5 @@
 #include <cassert>
-#include <null-safety/null_safety.h>
+#include <null_safety/null_safety.h>
 #include <string>
 
 int main(int argc, char* argv[]) {
