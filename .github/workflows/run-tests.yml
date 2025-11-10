@@ -16,5 +16,5 @@ jobs:
     - name: run tests
       run: |
         cd cmake-build-test
-        ./tests/null-safety-tests -s
+        ./tests/null_safety_tests -s
       timeout-minutes: 5

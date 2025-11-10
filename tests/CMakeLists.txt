@@ -8,12 +8,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Catch2)
 
 # テスト
-add_executable(null-safety-tests
+add_executable(null_safety_tests
     nullable_ptr_test.cpp
     nonnull_ptr_test.cpp
     utility/utility.h
     utility/type_traits_test.cpp
     utility/type_traits.h
 )
-target_link_libraries(null-safety-tests PRIVATE null-safety Catch2::Catch2WithMain)
-add_test(NAME null-safety-tests COMMAND null-safety-cpp-tests)
+target_link_libraries(null_safety_tests PRIVATE null_safety Catch2::Catch2WithMain)
+add_test(NAME null_safety_tests COMMAND null_safety_tests)

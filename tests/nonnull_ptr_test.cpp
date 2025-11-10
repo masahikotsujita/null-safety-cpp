@@ -3,7 +3,7 @@
 //
 
 #include <catch2/catch_all.hpp>
-#include <null-safety/null_safety.h>
+#include <null_safety/null_safety.h>
 #include "utility/type_traits.h"
 #include "utility/utility.h"
 
